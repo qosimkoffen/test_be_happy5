@@ -33,7 +33,8 @@ class ItemsController < ApplicationController
     private
   
     def item_params
-      params.permit(:name, :done, :id)
+      # params.permit(:name, :done, :todo_id, :item) => ini saya komen karena kode bug
+      params.require(:item).permit(:name, :done, :todo_id)
     end
   
     def set_todo

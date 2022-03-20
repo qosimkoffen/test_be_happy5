@@ -22,6 +22,8 @@ class TodosController < ApplicationController
   def update
     @todo.update(todo_params)
     json_response({message: 'Update berhasil',data: @todo})
+    # @todo.update(todo_params)
+    # head :no_content
   end
 
   # DELETE /todos/:id
@@ -34,7 +36,8 @@ class TodosController < ApplicationController
 
   def todo_params
     # whitelist params
-    params.permit(:title, :created_by, :id)
+    # params.permit(:title, :created_by, :, :todo)
+    params.require(:todo).permit(:title, :created_by, :id)
   end
 
   def set_todo

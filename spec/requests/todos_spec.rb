@@ -52,7 +52,8 @@ RSpec.describe 'Todos API', type: :request do
   # Test suite for POST /todos
   describe 'POST /todos' do
     # valid payload
-    let(:valid_attributes) { { title: 'Learn Elm', created_by: '1' } }
+    let(:valid_attributes) {{todo: { title: 'Learn Elm', created_by: '1' } }}
+    let(:invalid_attributes) {{todo: { title: 'Learn Elm'} }}
 
     context 'when the request is valid' do
       before { post '/todos', params: valid_attributes }
@@ -67,7 +68,7 @@ RSpec.describe 'Todos API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/todos', params: { title: 'Foobar' } }
+      before { post '/todos', params: invalid_attributes }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -82,7 +83,7 @@ RSpec.describe 'Todos API', type: :request do
 
   # Test suite for PUT /todos/:id
   describe 'PUT /todos/:id' do
-    let(:valid_attributes) { { title: 'Shopping' } }
+    let(:valid_attributes) { {todo: { title: 'Shopping' } }}
 
     context 'when the record exists' do
       before { put "/todos/#{todo_id}", params: valid_attributes}

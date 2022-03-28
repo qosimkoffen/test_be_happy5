@@ -61,9 +61,10 @@ RSpec.describe 'Items API' do
     end
   end
 
-  # Test suite for PUT /todos/:todo_id/items
+  # Test suite for POST /todos/:todo_id/items
   describe 'POST /todos/:todo_id/items' do
-    let(:valid_attributes) { { name: 'Visit Narnia', done: false }  }
+    let(:valid_attributes) {{item: { name: 'Visit Narnia', done: false }  }}
+    let(:invalid_attribute) {{item: {name: 'Visit Narnia'} }}
 
     context 'when request attributes are valid' do
       before { post "/todos/#{todo_id}/items", params: valid_attributes }
@@ -74,21 +75,22 @@ RSpec.describe 'Items API' do
     end
 
     context 'when an invalid request' do
-      before { post "/todos/#{todo_id}/items", params: {} }
+      before { post "/todos/#{todo_id}/items", params: invalid_attribute }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
       end
 
       it 'returns a failure message' do
-        expect(response.body).to match(/Validation failed: Name can't be blank/)
+        expect(response.body)
+          .to match(/Validation failed: Done can't be blank/)
       end
     end
   end
 
   # Test suite for PUT /todos/:todo_id/items/:id
   describe 'PUT /todos/:todo_id/items/:id' do
-    let(:valid_attributes) {{ name: 'Mozart' } }
+    let(:valid_attributes) {{item:{ name: 'Mozart' } }}
 
     before { put "/todos/#{todo_id}/items/#{id}", params: valid_attributes }
 

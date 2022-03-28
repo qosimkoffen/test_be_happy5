@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
   
     # POST /todos/:todo_id/items
     def create
-    @create_item = @todo.items.create!(item_params) # buat variabel baru, biar items nya ngikutin id todos
+      @create_item = @todo.items.create!(item_params) # buat variabel baru, biar items nya ngikutin id todos
       json_response(@create_item, :created)
     end
   
@@ -33,7 +33,7 @@ class ItemsController < ApplicationController
     private
   
     def item_params
-      params.permit(:name, :done, :todo_id)
+      params.require(:item).permit(:name, :done, :todo_id)
     end
   
     def set_todo

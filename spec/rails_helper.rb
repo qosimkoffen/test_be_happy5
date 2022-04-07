@@ -25,7 +25,8 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # [...]
 RSpec.configure do |config|
   # [...]
-  config.include RequestSpecHelper, type: :request
+  config.include RequestSpecHelper
+  config.include ControllerSpecHelper
   # [...]
 end
 # Requires supporting ruby files with custom matchers and macros, etc, in
